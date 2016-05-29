@@ -16,23 +16,30 @@ class MapDeque {
     }
     this.map[key] = value
     this.queue[push ? 'push' : 'unshift']({ key, value })
+    this.length++
     return this
   }
   push (key, value) { return this._put(key, value, true) }
   unshift (key, value) { return this._put(key, value, false) }
 
-  _get (shift) {
-    if (this.queue.length === 0) return
+  _remove (shift, entry) {
+    if (this.length === 0) return
     var { key, value } = this.queue[shift ? 'shift' : 'pop']()
     delete this.map[key]
-    return value
+    this.length--
+    return entry ? { key, value } : value
   }
-  shift () { return this._get(true) }
-  pop () { return this._get(false) }
+  shift (entry) { return this._remove(true, entry) }
+  pop (entry) { return this._remove(false, entry) }
 
   has (key) {
     key = this._convertKey(key)
     return this.map.hasOwnProperty(key)
+  }
+
+  get (key) {
+    key = this._convertKey(key)
+    return this.map[key]
   }
 
   _convertKey (key) {
