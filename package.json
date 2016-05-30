@@ -1,6 +1,6 @@
 {
   "name": "map-deque",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A map with ordered insertion and removal",
   "main": "index.js",
   "scripts": {
